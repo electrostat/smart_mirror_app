@@ -6,7 +6,7 @@ import java.net.URL
  */
 
 class DarkSky {
-    lateinit var forecast: Forecast
+    private lateinit var forecast: Forecast
 
     fun getWeather() {
         val apiKey = PrivateConstants.DarkSkyApiKey
@@ -38,6 +38,10 @@ class DarkSky {
         forecast = Forecast(time, summary, icon, precipIntent, precipProb, temp, feelsLikeTemp, dewPoint, humidity, windSpeed, uv)
 
         println("forecast : $forecast")
+    }
+
+    fun getForecast(): Forecast {
+        return forecast
     }
 }
 

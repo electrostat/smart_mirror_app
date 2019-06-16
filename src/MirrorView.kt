@@ -9,6 +9,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import tornadofx.*
 import DarkSky
+import javafx.scene.text.Text
 
 class MirrorView : View() {
     override val root = vbox {
@@ -18,31 +19,116 @@ class MirrorView : View() {
                     to BackgroundRepeat.NO_REPEAT)
             textFill = Color.WHITE
         }
+
+        val darkSky = DarkSky()
+        var summary = Text()
+        var temperature = Text()
+        var feelsLike = Text()
+        var precipProbability = Text()
+        var humidity = Text()
+        var windSpeed = Text()
+        var uvIndex = Text()
+
+        fun updateForecast() {
+            println("forecast UI updating")
+            val forecast = darkSky.getForecast()
+
+            summary.text = forecast.summaryString
+            temperature.text = "Current Temp: " + forecast.temperature.toString() + "°F"
+            feelsLike.text = "Feels like " + forecast.apparentTemperature.toString() + "°F"
+            precipProbability.text = forecast.precipProbability.toString() + " chance of rain"
+            humidity.text = forecast.humidity.toString() + "% humidity"
+            windSpeed.text = forecast.windSpeed.toString() + "mph winds"
+            uvIndex.text = "UV Index: " + forecast.uvIndex.toString()
+        }
+
         prefWidth = 500.0
-        prefHeight = 300.0
+        prefHeight = 500.0
 
         spacing = 20.0
-        padding = insets(50, 20)
-        text("A text") {
-            font = Font.font(40.0)
+        padding = insets(20, 20)
+
+        text("Date") {
+            font = Font.font(30.0)
             alignment = Pos.CENTER
             fill = Color.WHITE
 
         }
 
-        button("OK")
-        {
-            font = Font.font(20.0)
-            action {
-//                close()
-                val darkSky = DarkSky()
-                darkSky.getWeather()
+        text("Clock") {
+            font = Font.font(30.0)
+            alignment = Pos.CENTER
+            fill = Color.WHITE
+
+        }
+
+        vbox {
+            summary = text("Summary") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
+
+            }
+
+            temperature = text("temperature") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
+            }
+
+            feelsLike = text("Feels Like") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
+            }
+
+            precipProbability = text("Precipitation Probability") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
+            }
+
+            humidity = text("humidity") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
+            }
+
+            windSpeed = text("windSpeed") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
+            }
+
+            uvIndex = text("uvIndex") {
+                font = Font.font(30.0)
+                alignment = Pos.CENTER
+                fill = Color.WHITE
             }
         }
+
+        hbox {
+            button("Request") {
+                font = Font.font(20.0)
+                action {
+                    darkSky.getWeather()
+                }
+            }
+
+            button("Update View") {
+                font = Font.font(20.0)
+                action {
+                    updateForecast()
+                }
+            }
+        }
+
         sceneProperty().addListener { _, _, n ->
             n.fill = null
         }
     }
+
+
 }
 
 class SmartMirrorApp : App() {

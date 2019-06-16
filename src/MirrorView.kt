@@ -9,7 +9,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import tornadofx.*
 
-class HelloWorld : View() {
+class MirrorView : View() {
     override val root = vbox {
         style {
             backgroundColor = multi(Color.BLACK)
@@ -42,6 +42,6 @@ class HelloWorld : View() {
     }
 }
 
-class HelloWorldApp : App() {
-    override val primaryView = HelloWorld::class
+class SmartMirrorApp : App() {
+    override val primaryView = MirrorView::class
 }

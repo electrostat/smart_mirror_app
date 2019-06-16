@@ -32,18 +32,20 @@ class MirrorView : View() {
         fun updateForecast() {
             println("forecast UI updating")
             val forecast = darkSky.getForecast()
+            val rainChance = forecast.precipProbability * 100
+            val humidityPercent = forecast.humidity * 100
 
             summary.text = forecast.summaryString
             temperature.text = "Current Temp: " + forecast.temperature.toString() + "°F"
             feelsLike.text = "Feels like " + forecast.apparentTemperature.toString() + "°F"
-            precipProbability.text = forecast.precipProbability.toString() + " chance of rain"
-            humidity.text = forecast.humidity.toString() + "% humidity"
+            precipProbability.text = rainChance.toString() + "% chance of rain"
+            humidity.text = humidityPercent.toString() + "% humidity"
             windSpeed.text = forecast.windSpeed.toString() + "mph winds"
             uvIndex.text = "UV Index: " + forecast.uvIndex.toString()
         }
 
-        prefWidth = 500.0
-        prefHeight = 500.0
+        prefWidth = 600.0
+        prefHeight = 600.0
 
         spacing = 20.0
         padding = insets(20, 20)
@@ -52,14 +54,12 @@ class MirrorView : View() {
             font = Font.font(30.0)
             alignment = Pos.CENTER
             fill = Color.WHITE
-
         }
 
         text("Clock") {
             font = Font.font(30.0)
             alignment = Pos.CENTER
             fill = Color.WHITE
-
         }
 
         vbox {

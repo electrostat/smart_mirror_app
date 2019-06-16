@@ -8,6 +8,7 @@ import javafx.scene.layout.BackgroundRepeat
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import tornadofx.*
+import DarkSky
 
 class MirrorView : View() {
     override val root = vbox {
@@ -33,7 +34,9 @@ class MirrorView : View() {
         {
             font = Font.font(20.0)
             action {
-                close()
+//                close()
+                val darkSky = DarkSky()
+                darkSky.getWeather()
             }
         }
         sceneProperty().addListener { _, _, n ->
